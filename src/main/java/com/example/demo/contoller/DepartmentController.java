@@ -1,39 +1,46 @@
 package com.example.demo.contoller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.models.Employee;
+import com.example.demo.service.departmentService.DepartmentService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path ="/department")
 public class DepartmentController {
 
-    @GetMapping(path = "/{id}/employees")
-    public String getEmployeesByDepartment(@PathVariable int id){
+    private final DepartmentService departmentService;
 
-        return "ok";
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
+    }
+
+    @GetMapping(path = "/{id}/employees")
+    public List<Employee> getEmployeesInDepartment(@PathVariable int id){
+        return departmentService.printAllEmployeesInDepartment(id);
     }
 
 
     @GetMapping(path = "/{id}/salary/sum")
-    public String getSumSalaryByDepartment(@PathVariable int id){
-        return "ok";
+    public double getSumSalaryByDepartment(@PathVariable int id){
+        return departmentService.calculateAllMonthSalariesByDepartment(id);
     }
 
     @GetMapping(path = "/{id}/salary/max")
-    public String getMaxSalaryEmployeeByDepartment(@PathVariable int id){
-        return "ok";
+    public Employee getMaxSalaryEmployeeByDepartment(@PathVariable int id){
+        return departmentService.findMaxSalaryByDepartment(id);
     }
 
     @GetMapping(path = "/{id}/salary/min")
-    public String getMinSalaryEmployeeByDepartment(@PathVariable int id){
-        return "ok";
+    public Employee getMinSalaryEmployeeByDepartment(@PathVariable int id){
+        return departmentService.findMinSalaryByDepartment(id);
     }
 
     @GetMapping(path = "/employees")
-    public String getAllEmployees(@PathVariable int id){
-        return "ok";
+    public Map<Integer, List<Employee>> getAllEmployees(){
+        return departmentService.printEmployeesByDepartments();
     }
 
 }
