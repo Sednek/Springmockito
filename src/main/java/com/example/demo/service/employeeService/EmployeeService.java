@@ -7,12 +7,6 @@ import java.util.Map;
 
 public interface EmployeeService {
 
-    Employee findMaxSalaryByDepartment(int department);
-
-    Employee findMinSalaryByDepartment(int department);
-
-    double calculateAllMonthSalariesByDepartment(int department);
-
     List<Employee> printEmployeeByDepartments(int department);
 
     Map<Integer, List<Employee>> printEmployeesFromDepartments();
@@ -20,6 +14,8 @@ public interface EmployeeService {
     Employee addEmployee(Employee employee);
 
     Employee addEmployee(String name, int department, int salary);
+
+    void fireEmployee(String name, int department, int salary);
 
     List<Employee> getEmployees();
 }

@@ -1,5 +1,6 @@
 package com.example.demo.contoller;
 
+import com.example.demo.models.Employee;
 import com.example.demo.service.employeeService.EmployeeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,14 +28,10 @@ public class EmployeeController {
         return "employee add";
     }
 
-    @GetMapping(path = "/max-salary")
-    public String getEmployeeWithMaxSalaryByDepartment(@RequestParam(value = "departmentId") int departmentId){
-        return employeeService.findMaxSalaryByDepartment(departmentId).toString();
-    }
-
-    @GetMapping(path = "/min-salary")
-    public String getEmployeeWithMinSalaryByDepartment(@RequestParam(value = "departmentId") int departmentId){
-        return employeeService.findMinSalaryByDepartment(departmentId).toString();
+    @GetMapping(path = "/fire-employee")
+    public String fireEmployee(@RequestParam(value = "name") String name, @RequestParam(value = "department") int department, @RequestParam(value = "salary") int salary){
+        employeeService.fireEmployee(name, department, salary);
+        return "employee fired";
     }
 
     @GetMapping(value = "/all", params = "departmentId")

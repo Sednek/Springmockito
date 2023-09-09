@@ -21,36 +21,22 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employee;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
     public Employee addEmployee(String name, int department, int salary){
         Employee e = new Employee(name, department, salary);
         employees.add(e);
         return e;
     }
 
-    public Employee findMaxSalaryByDepartment(int department) {
-        Employee maxSalaryEmployee = employees.get(0);
-        return employees.stream()
-                .filter(e -> e.getDepartment() == department && maxSalaryEmployee.getSalary() < e.getSalary())
-                .findAny()
-                .orElse(null);
+    public void fireEmployee(String name, int department, int salary){
+        for (int i = 0; i < employees.size(); i++) {
+            if(employees.get(i).getName().equals(name) && employees.get(i).getDepartment() == department && employees.get(i).getSalary() == salary){
+                employees.remove(i);
+            }
+        }
     }
 
-    public Employee findMinSalaryByDepartment(int department) {
-        Employee minSalaryEmployee = employees.get(0);
-        return employees.stream()
-                .filter(e -> e.getDepartment() == department && minSalaryEmployee.getSalary() > e.getSalary())
-                .findAny()
-                .orElse(null);
-    }
-
-    public double calculateAllMonthSalariesByDepartment(int department) {
-        final double[] sum = {0};
-        employees.forEach( e -> sum[0] = sum[0] + e.getSalary());
-        return sum[0];
+    public List<Employee> getEmployees() {
+        return employees;
     }
 
     public List<Employee> printEmployeeByDepartments(int department) {

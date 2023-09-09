@@ -8,8 +8,6 @@ import java.util.Map;
 public interface DepartmentService {
     List<Employee> printAllEmployeesInDepartment(int department);
 
-    double calculateAllMonthSalariesByDepartment(int department);
-
     Employee findMaxSalaryByDepartment(int department);
 
     Employee findMinSalaryByDepartment(int department);

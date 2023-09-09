@@ -22,12 +22,6 @@ public class DepartmentController {
         return departmentService.printAllEmployeesInDepartment(id);
     }
 
-
-    @GetMapping(path = "/{id}/salary/sum")
-    public double getSumSalaryByDepartment(@PathVariable int id){
-        return departmentService.calculateAllMonthSalariesByDepartment(id);
-    }
-
     @GetMapping(path = "/{id}/salary/max")
     public Employee getMaxSalaryEmployeeByDepartment(@PathVariable int id){
         return departmentService.findMaxSalaryByDepartment(id);

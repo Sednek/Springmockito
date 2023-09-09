@@ -9,9 +9,10 @@ class EmployeeServiceImplTest {
 
     Employee expected = new Employee("Nikita", 1, 10000);
 
+    EmployeeService emps = new EmployeeServiceImpl();
+
     @Test
     void addEmployee() {
-        EmployeeService emps = new EmployeeServiceImpl();
         expected.resetEmployeeID();
         Employee actual = emps.addEmployee(expected);
         assertEquals(expected, actual);
@@ -20,7 +21,6 @@ class EmployeeServiceImplTest {
 
     @Test
     void addEmployee2() {
-        EmployeeService emps = new EmployeeServiceImpl();
         expected.resetEmployeeID();
         Employee actual = emps.addEmployee("Nikita", 1, 10000);
         assertEquals(expected, actual);
@@ -29,39 +29,26 @@ class EmployeeServiceImplTest {
 
     @Test
     void addEmployee3() {
-        EmployeeService emps = new EmployeeServiceImpl();
         expected.resetEmployeeID();
         assertThrows(IllegalArgumentException.class, () -> emps.addEmployee(null), "Передан пустой сотрудник");
     }
 
     @Test
-    void findMaxSalaryByDepartment() {
-        EmployeeService emps = new EmployeeServiceImpl();
+    void fireEmployee(){
         expected.resetEmployeeID();
-        emps.addEmployee("Nikita", 1, 1000);
-        expected.resetEmployeeID();
-        emps.addEmployee("Nikita", 1, 10000);
-        assertEquals(expected, emps.findMaxSalaryByDepartment(1));
-    }
 
-    @Test
-    void findMinSalaryByDepartment() {
-        EmployeeService emps = new EmployeeServiceImpl();
-        expected.resetEmployeeID();
-        emps.addEmployee("Nikita", 1, 10000);
-        expected.resetEmployeeID();
-        emps.addEmployee("Nikita", 1, 1000);
-        expected.setSalary(1000);
-        assertEquals(expected, emps.findMinSalaryByDepartment(1));
-    }
+        emps.addEmployee("Nikita Demin", 1,10000);
+        emps.addEmployee("Nikita Ivanov", 1, 20000);
 
-    @Test
-    void calculateAllMonthSalariesByDepartment() {
-        EmployeeService emps = new EmployeeServiceImpl();
-        emps.addEmployee("Nikita", 1, 1000);
-        emps.addEmployee("Oleg", 1, 1000);
-        double actual = emps.calculateAllMonthSalariesByDepartment(1);
-        double exp = 2000;
-        assertEquals(exp, actual);
+        emps.fireEmployee("Nikita Demin", 1,10000);
+
+        expected.resetEmployeeID();
+
+        EmployeeService emps2 = new EmployeeServiceImpl();
+
+        emps2.addEmployee("Nikita Ivanov", 1, 20000);
+        emps2.getEmployees().get(0).setId(2);
+
+        assertEquals(emps.getEmployees(), emps2.getEmployees());
     }
 }

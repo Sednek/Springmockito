@@ -12,31 +12,17 @@ import java.util.Map;
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private final List<Employee> employees;
+    private final EmployeeService employeeService;
 
     public DepartmentServiceImpl(EmployeeService employeeService) {
-        this.employees = employeeService.getEmployees();
-    }
 
-    public List<Employee> printAllEmployeesInDepartment(int department) {
-        return employees.stream()
-                .filter(emp -> emp.getDepartment() == department)
-                .toList();
-    }
-    public double calculateAllMonthSalariesByDepartment(int department) {
-        double sum = 0;
+        this.employeeService = employeeService;
 
-        for (Employee employee : employees) {
-            if (employee.getDepartment() == department) {
-                sum = sum + employee.getSalary();
-            }
-        }
-        return sum;
     }
 
     public Employee findMaxSalaryByDepartment(int department) {
-        Employee maxSalaryEmployee = employees.get(0);
-        for (Employee employee : employees) {
+        Employee maxSalaryEmployee = employeeService.getEmployees().get(0);
+        for (Employee employee : employeeService.getEmployees()) {
             if (employee.getDepartment() == department && maxSalaryEmployee.getSalary() < employee.getSalary()) {
                 maxSalaryEmployee = employee;
             }
@@ -45,8 +31,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     public Employee findMinSalaryByDepartment(int department) {
-        Employee minSalaryEmployee = employees.get(0);
-        for (Employee employee : employees) {
+        Employee minSalaryEmployee = employeeService.getEmployees().get(0);
+        for (Employee employee : employeeService.getEmployees()) {
             if (employee.getDepartment() == department && minSalaryEmployee.getSalary() > employee.getSalary()) {
                 minSalaryEmployee = employee;
             }
@@ -54,11 +40,17 @@ public class DepartmentServiceImpl implements DepartmentService {
         return minSalaryEmployee;
     }
 
+    public List<Employee> printAllEmployeesInDepartment(int department) {
+        return employeeService.getEmployees().stream()
+                .filter(emp -> emp.getDepartment() == department)
+                .toList();
+    }
+
     public Map<Integer, List<Employee>> printEmployeesByDepartments() {
         Map<Integer, List<Employee>> empsByDep = new HashMap<>();
         List<Employee> emps = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
-            for (Employee employee : employees) {
+            for (Employee employee : employeeService.getEmployees()) {
                 if (employee == null) {
                     continue;
                 }
