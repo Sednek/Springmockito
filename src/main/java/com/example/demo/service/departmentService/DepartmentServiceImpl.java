@@ -21,23 +21,25 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     public Employee findMaxSalaryByDepartment(int department) {
-        Employee maxSalaryEmployee = employeeService.getEmployees().get(0);
-        for (Employee employee : employeeService.getEmployees()) {
-            if (employee.getDepartment() == department && maxSalaryEmployee.getSalary() < employee.getSalary()) {
-                maxSalaryEmployee = employee;
-            }
-        }
-        return maxSalaryEmployee;
+
+        Employee[] maxSalaryEmployee = {employeeService.getEmployees().get(0)};
+
+        employeeService.getEmployees().stream()
+                .filter(emp -> emp.getDepartment() == department && maxSalaryEmployee[0].getSalary() < emp.getSalary())
+                .forEach(emp -> maxSalaryEmployee[0] = emp);
+
+        return maxSalaryEmployee[0];
     }
 
     public Employee findMinSalaryByDepartment(int department) {
-        Employee minSalaryEmployee = employeeService.getEmployees().get(0);
-        for (Employee employee : employeeService.getEmployees()) {
-            if (employee.getDepartment() == department && minSalaryEmployee.getSalary() > employee.getSalary()) {
-                minSalaryEmployee = employee;
-            }
-        }
-        return minSalaryEmployee;
+
+        Employee[] minSalaryEmployee = {employeeService.getEmployees().get(0)};
+
+        employeeService.getEmployees().stream()
+                .filter(emp -> emp.getDepartment() == department && minSalaryEmployee[0].getSalary() > emp.getSalary())
+                .forEach(emp -> minSalaryEmployee[0] = emp);
+
+        return minSalaryEmployee[0];
     }
 
     public List<Employee> printAllEmployeesInDepartment(int department) {

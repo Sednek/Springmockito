@@ -28,11 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     public void fireEmployee(String name, int department, int salary){
-        for (int i = 0; i < employees.size(); i++) {
-            if(employees.get(i).getName().equals(name) && employees.get(i).getDepartment() == department && employees.get(i).getSalary() == salary){
-                employees.remove(i);
-            }
-        }
+        employees.removeIf(emp -> emp.getName().equals(name) && emp.getDepartment() == department && emp.getSalary() == salary);
     }
 
     public List<Employee> getEmployees() {
