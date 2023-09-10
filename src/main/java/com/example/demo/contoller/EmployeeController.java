@@ -1,6 +1,5 @@
 package com.example.demo.contoller;
 
-import com.example.demo.models.Employee;
 import com.example.demo.service.employeeService.EmployeeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
